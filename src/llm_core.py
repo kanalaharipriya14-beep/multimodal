@@ -3406,12 +3406,16 @@ async def _stream_llm_inner(url: str, model: str, messages: List[Dict], temperat
     except httpx.WriteTimeout:
         yield f'event: error\ndata: {json.dumps({"error": "Upstream timeout", "status": 504, "fallback_eligible": False})}\n\n'
     except httpx.ProtocolError:
-        yield f'event: error\ndata: {json.dumps({"error": "Upstream protocol error", "status": 502, "fallback_eligible": False})}\n\n'
-    except httpx.NetworkError:
-        yield f'event: error\ndata: {json.dumps({"error": "Network error", "status": 502, "fallback_eligible": False})}\n\n'
+        yield f'event: error\ndata: {json.dumps({"error": "Connection reset by upstream network", "status": 502, "fallback_eligible": False})}\n\n'
+    except httpx.NetworkError as e:
+        err_str = str(e).lower()
+        err_msg = "Network connection was forcibly reset" if ("wsarecv" in err_str or "forcibly closed" in err_str) else "Network connection error"
+        yield f'event: error\ndata: {json.dumps({"error": err_msg, "status": 502, "fallback_eligible": False})}\n\n'
     except Exception as e:
+        err_str = str(e).lower()
+        err_msg = "Network connection was forcibly reset" if ("wsarecv" in err_str or "forcibly closed" in err_str) else str(e)
         logger.error(f"Stream error: {e}")
-        yield f'event: error\ndata: {json.dumps({"error": str(e), "status": 502, "fallback_eligible": False})}\n\n'
+        yield f'event: error\ndata: {json.dumps({"error": err_msg, "status": 502, "fallback_eligible": False})}\n\n'
 
 
 def _summarize_stream_error(err_chunk: Optional[str]) -> str:
