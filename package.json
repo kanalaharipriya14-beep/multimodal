@@ -4,6 +4,6 @@
     "url": "https://github.com/antigravity-dev/antigravity.git"
   },
   "devDependencies": {
-    "@antithesishq/bombadil": "^0.7.0"
+    "@antithesishq/bombadil": "^0.7.2"
   }
 }
