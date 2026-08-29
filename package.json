@@ -1,0 +1,9 @@
+{
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antigravity-dev/antigravity.git"
+  },
+  "devDependencies": {
+    "@antithesishq/bombadil": "^0.7.0"
+  }
+}

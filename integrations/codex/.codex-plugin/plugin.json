@@ -1,0 +1,22 @@
+{
+  "name": "antigravity",
+  "version": "0.1.1",
+  "description": "Connect Codex to a scoped Antigravity instance.",
+  "author": {
+    "name": "Antigravity"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Antigravity",
+    "shortDescription": "Use scoped Antigravity tools from Codex.",
+    "longDescription": "Connects Codex terminal sessions to Antigravity through user-controlled scoped API tokens. Codex must use /api/codex/* endpoints so Antigravity Settings can enforce tool access.",
+    "developerName": "Antigravity",
+    "category": "Productivity",
+    "capabilities": [
+      "todos",
+      "email",
+      "scoped-api"
+    ],
+    "defaultPrompt": "Use Antigravity only through configured scoped access. Check capabilities before reading or writing data."
+  }
+}
